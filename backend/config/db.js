@@ -1,14 +1,14 @@
-//this the database connection file, we will use mongoose to connect to our MongoDB database. We will export the connectDB function so that we can use it in our server.js file to connect to the database before starting the server.
-
 const mongoose = require("mongoose");
+require("dotenv").config();
 
+// Connect to MongoDB Atlas using environment variable
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/password_manager");
+        await mongoose.connect(process.env.MONGO_URI);
 
-        console.log("MongoDB connected");
+        console.log("MongoDB Atlas connected successfully");
     } catch (error) {
-        console.error(error);
+        console.error("Database connection error:", error.message);
         process.exit(1);
     }
 };
