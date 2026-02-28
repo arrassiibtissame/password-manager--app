@@ -14,13 +14,15 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-// Test route
+// Routes
 app.get("/", (req, res) => {
     res.send("Password Manager API running");
 });
 
-const PORT = 3000;
+// Port from environment variable
+const PORT = process.env.PORT || 3000;
 
+// Start server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
