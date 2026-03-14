@@ -15,8 +15,10 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/auth", authRoutes); // ✅ this is the key line
-
+app.use("/api/auth", authRoutes); 
+//password routes
+const passwordRoutes = require("./routes/passwords");
+app.use("/api/passwords", passwordRoutes);
 // Test route
 app.get("/", (req, res) => {
     res.send("Password Manager API running");
