@@ -11,7 +11,7 @@ function encrypt(text){
     return encrypted;
 }
 function decrypt(text){
-    const decipher = crypto.createDicipheriv(algorithm,secretKey,iv);
+    const decipher = crypto.createDecipheriv(algorithm,secretKey,iv);
     let decrypted = decipher.update(text,"hex","utf8");
     decrypted += decipher.final("utf8");
     return decrypted;
