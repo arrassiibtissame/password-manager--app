@@ -1,3 +1,5 @@
+
+const {encrypt, decrypt}=require("../utils/crypto");
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
@@ -7,7 +9,8 @@ const Password = require("../models/Passwords");
 router.post("/", auth, async (req, res) => {
   const { title, username, password } = req.body;
   try {
-    const newPassword = new Password({ user: req.user.id, title, username, password });
+    const encryptedPassword = encrypt(password);
+    const newPassword = new Password({ user: req.user.id, title, username, password: encryptedPassword });
     await newPassword.save();
     res.status(201).json(newPassword);
   } catch (err) {
@@ -18,13 +21,13 @@ router.post("/", auth, async (req, res) => {
 
 // Get all passwords for logged-in user
 router.get("/", auth, async (req, res) => {
-  try {
+  
     const passwords = await Password.find({ user: req.user.id });
-    res.json(passwords);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
+   const decryptedPasswords = passwords.map(p => ({
+    ...p._doc,
+    password: decrypt(p.password)
+  }));
+  res.json(decryptedPasswords);
 });
 
 module.exports = router;
