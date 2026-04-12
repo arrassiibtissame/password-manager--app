@@ -1,24 +1,38 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = function (req, res, next){
-    console.log("HEADERS:", req.headers.authorization);
-    const authHeader = req.headers.authorization;
-    if (!authHeader){
-        return res.status(401).json({message:"No token,access denied"});
+module.exports = function (req, res, next) {
+  console.log("=== AUTH MIDDLEWARE START ===");
+  console.log("URL:", req.originalUrl);
+  console.log("METHOD:", req.method);
+  console.log("AUTH HEADER:", req.headers.authorization);
 
-    }
-    // Split "Bearer TOKEN"
-    const parts = authHeader.split(" ");
-    if (parts.length !== 2 || parts[0] !== "Bearer"){
-        return res.status(401).json({message:"Token format invalid"});
-    }
-    const token = parts[1];
-    
-    try {
-        const decoded = jwt.verify(token,process.env.JWT_SECRET);
-        req.user = decoded;
-        next();}
-        catch (err){
-            res.status(401).json({message:"Invalid token"});
+  const authHeader = req.headers.authorization;
 
-        }};
+  if (!authHeader) {
+    console.log("❌ NO AUTH HEADER");
+    return res.status(401).json({ message: "No token, access denied" });
+  }
+
+  const parts = authHeader.trim().split(" ");
+  console.log("PARTS:", parts);
+
+  const token = parts[1];
+
+  if (!token) {
+    console.log("❌ NO TOKEN AFTER SPLIT");
+    return res.status(401).json({ message: "No token, access denied" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("DECODED:", decoded);
+
+    req.user = decoded;
+
+    console.log("=== AUTH SUCCESS ===");
+    next();
+  } catch (err) {
+    console.log("JWT ERROR:", err.message);
+    return res.status(401).json({ message: "Token invalid" });
+  }
+};
