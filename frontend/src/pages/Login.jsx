@@ -1,19 +1,41 @@
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        { email, password }
+      );
+
+      localStorage.setItem("token", res.data.token);
+
+      alert("Login successful ✅");
+
+      navigate("/dashboard");
+    } catch (err) {
+  console.log("FULL ERROR:", err);
+  console.log("RESPONSE DATA:", err.response?.data);
+  console.log("MESSAGE:", err.message);
+
+  alert(err.response?.data?.message || err.message);
+}
+  };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "auto" }}>
-      <h2>Login</h2>
+    <div>
+      <h1>Login</h1>
 
       <input
-        type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        style={{ display: "block", marginBottom: "10px", width: "100%" }}
       />
 
       <input
@@ -21,10 +43,9 @@ function Login() {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        style={{ display: "block", marginBottom: "10px", width: "100%" }}
       />
 
-      <button>Login</button>
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
 }
