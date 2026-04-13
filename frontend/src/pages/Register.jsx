@@ -19,7 +19,7 @@ function Register (){
             );
             console.log (res.data);
             alert("Register successful ✅");
-            navigate ("/");
+            navigate ("/dashboard");
         }
         catch (err){
             console.log(err.response?.data || err.message);
