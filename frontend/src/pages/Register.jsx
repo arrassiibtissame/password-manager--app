@@ -6,22 +6,27 @@ function Register (){
     const [username, setUsername] = useState("");
     const [email, setEmail]=useState("");
     const [password,setPassword]= useState("");
+
+    const [message,setMessage] = useState("");
+    const [error,setError] = useState("");
     const navigate = useNavigate();
 
     const handleRegister =async () => {
         try {
             const res = await axios.post (
                 "http://localhost:3000/api/auth/register",{
-                    username,
-                    email,
-                    password,
+                    username : username,
+                    email : email,
+                    password : password,
                 }
             );
-            console.log (res.data);
-            alert("Register successful ✅");
-            navigate ("/dashboard");
+            setMessage("✅ Registered successfully!");
+            setTimeout(() => {
+                navigate("/dashboard");
+            }, 2000);
         }
         catch (err){
+            setError("❌ Registration failed!");
             console.log(err.response?.data || err.message);
         }
         };
@@ -45,6 +50,9 @@ function Register (){
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}/>
                 <button onClick={handleRegister}>Register  </button>
+                <p>Already have an account? <a href="/">Login </a></p>  
+                {message && <p style={{ color: "green" }}>{message}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
             </div>
         );
