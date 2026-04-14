@@ -10,7 +10,7 @@ router.post("/", auth, async (req, res) => {
   const { title, username, password } = req.body;
   try {
     const encryptedPassword = encrypt(password);
-    const newPassword = new Password({ user: req.user.id, title, username, password: encryptedPassword });
+    const newPassword = new Password({ userId: req.user.id, title, username, password: encryptedPassword });
     await newPassword.save();
     res.status(201).json(newPassword);
   } catch (err) {
@@ -22,7 +22,7 @@ router.post("/", auth, async (req, res) => {
 // Get all passwords for logged-in user
 router.get("/", auth, async (req, res) => {
   
-    const passwords = await Password.find({ user: req.user.id });
+    const passwords = await Password.find({ userId: req.user.id });
    const decryptedPasswords = passwords.map(p => ({
     ...p._doc,
     password: decrypt(p.password)

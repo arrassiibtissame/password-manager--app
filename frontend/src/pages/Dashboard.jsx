@@ -8,10 +8,13 @@ function Dashboard() {
   const [site, setSite] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPasswords, setShowPasswords] = useState(false);  
 
   // ✅ FUNCTION 1: FETCH PASSWORDS
   const fetchPasswords = async () => {
     const token = localStorage.getItem("token");
+    console.log("token:",localStorage.getItem("token"));
+    console.log("SENDING TOKEN:", token);
 
     try {
       const res = await axios.get("http://localhost:3000/api/passwords", {
@@ -103,6 +106,9 @@ function Dashboard() {
       </form>
 
       <hr />
+      <button onClick={() => setShowPasswords(!showPasswords)}>
+        {showPasswords ? "Hide Passwords 🙈" : "Show Passwords 👁"}
+        </button>
 
       {passwords.length === 0 ? (
         <p>No passwords yet</p>
@@ -112,11 +118,16 @@ function Dashboard() {
             <h4>{p.title}</h4>
             <p>{p.site}</p>
             <p>{p.username}</p>
-            <p>{p.password}</p>
+            <p>{ showPasswords ? p.password : "••••••••" }</p>
           </div>
+
         ))
+        
+
       )}
+       
     </div>
+   
   );
 }
 
