@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { AuthContext } from "../context/AuthContext";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = React.useContext(AuthContext);
 
   const handleLogin = async () => {
     try {
@@ -14,8 +15,7 @@ function Login() {
         { email, password }
       );
 
-      localStorage.setItem("token", res.data.token);
-window.location.href = "/dashboard";
+      login(res.data.token);
       alert("Login successful ✅");
       localStorage.setItem("token", res.data.token);
       setIsLoggedIn(true);

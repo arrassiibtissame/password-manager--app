@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 
 function Dashboard() {
@@ -8,13 +9,11 @@ function Dashboard() {
   const [site, setSite] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPasswords, setShowPasswords] = useState(false);  
+  const [showPasswords, setShowPasswords] = useState(false); 
+  const { token, logout } = useContext(AuthContext); 
 
   // ✅ FUNCTION 1: FETCH PASSWORDS
   const fetchPasswords = async () => {
-    const token = localStorage.getItem("token");
-    console.log("token:",localStorage.getItem("token"));
-    console.log("SENDING TOKEN:", token);
 
     try {
       const res = await axios.get("http://localhost:3000/api/passwords", {
@@ -33,7 +32,6 @@ function Dashboard() {
   const handleAddPassword = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("token");
 
     try {
       await axios.post(
@@ -67,11 +65,10 @@ function Dashboard() {
 
   // ✅ useEffect ONLY calls functions
   useEffect(() => {
-    fetchPasswords();
-  }, []);
+    if (token) fetchPasswords();
+  }, [token]);
   const handleDelete = async (id) => {
     console.log("Deleting password with id:", id);
-    const token = localStorage.getItem("token");
     try {
         await axios.delete(`http://localhost:3000/api/passwords/${id}`, {
             headers: {
@@ -86,8 +83,10 @@ function Dashboard() {
     }};
     // logout function
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        window.location.href = "/"; // redirect to login
+        logout(); 
+        window.location.href="/";
+
+    
     };
 
   return (
@@ -126,7 +125,7 @@ function Dashboard() {
       </form>
 
       <hr />
-      <button onClick={() => setShowPasswords(!showPasswords)}>
+      <button onClick={() => setShowPasswords(prev => !prev)}>
         {showPasswords ? "Hide Passwords 🙈" : "Show Passwords 👁"}
         </button>
 
@@ -134,7 +133,7 @@ function Dashboard() {
         <p>No passwords yet</p>
       ) : (
         passwords.map((p) => {
-             console.log("PASSWORD ITEM:", p);
+             
             return (
           <div key={p._id}>
             <h4>{p.title}</h4>

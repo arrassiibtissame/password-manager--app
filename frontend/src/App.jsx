@@ -6,9 +6,9 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    !!localStorage.getItem("token")
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(()=>{
+   return  !!localStorage.getItem("token");
+});
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -38,7 +38,7 @@ function App() {
         path="/dashboard"
         element={
           isLoggedIn ? (
-            <Dashboard handleLogout={handleLogout} />
+            <Dashboard handleLogout={handleLogout} setIsLoggedIn={setIsLoggedIn} />
           ) : (
             <Navigate to="/" />
           )
