@@ -70,6 +70,7 @@ function Dashboard() {
     fetchPasswords();
   }, []);
   const handleDelete = async (id) => {
+    console.log("Deleting password with id:", id);
     const token = localStorage.getItem("token");
     try {
         await axios.delete(`http://localhost:3000/api/passwords/${id}`, {
@@ -132,21 +133,27 @@ function Dashboard() {
       {passwords.length === 0 ? (
         <p>No passwords yet</p>
       ) : (
-        passwords.map((p) => (
+        passwords.map((p) => {
+             console.log("PASSWORD ITEM:", p);
+            return (
           <div key={p._id}>
             <h4>{p.title}</h4>
             <p>{p.site}</p>
             <p>{p.username}</p>
+           
             <p>{ showPasswords ? p.password : "••••••••" }</p>
-            <button onClick={()=> handleDelete(p.id)}>Delete </button>
+            
+            <button onClick={()=> handleDelete(p._id)}>Delete </button>
           </div>
 
-        ))
+        );
+    })
+)}
         
 
-      )}
+    
        <button onClick ={handleLogout}>Logout</button>  
-    </div>
+    </div> 
    
   );
 }
