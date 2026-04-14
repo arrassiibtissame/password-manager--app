@@ -6,7 +6,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { login } = React.useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const handleLogin = async () => {
     try {
@@ -16,9 +16,7 @@ function Login() {
       );
 
       login(res.data.token);
-      alert("Login successful ✅");
-      localStorage.setItem("token", res.data.token);
-      setIsLoggedIn(true);
+      alert("Login successful ✅");    
 
       navigate("/dashboard");
     } catch (err) {
