@@ -1,32 +1,46 @@
-import {Routes,Route,Navigate} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useState } from "react";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("token")
+  );
 
-function App() {  
-  const isLoggedIn = useState(!!localStorage.getItem("token"));
-  
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
   };
+
   return (
     <Routes>
-      {/*login*/}
-      <Route path="/" element={isLoggedIn? (<Navigate to="/dashboard" />) : (<Login  setIsLoggedIn={setIsLoggedIn}/>) } />
-      {/*register*/}
+      {/* LOGIN */}
+      <Route
+        path="/"
+        element={
+          isLoggedIn ? (
+            <Navigate to="/dashboard" />
+          ) : (
+            <Login setIsLoggedIn={setIsLoggedIn} />
+          )
+        }
+      />
+
+      {/* REGISTER */}
       <Route path="/register" element={<Register />} />
-      {/*dashboard*/}
+
+      {/* DASHBOARD */}
       <Route
         path="/dashboard"
-        element={isLoggedIn ? (
-         
+        element={
+          isLoggedIn ? (
             <Dashboard handleLogout={handleLogout} />
-        ):(
-          <Navigate to="/" />
-         )
+          ) : (
+            <Navigate to="/" />
+          )
         }
       />
     </Routes>

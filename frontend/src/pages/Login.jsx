@@ -15,7 +15,7 @@ function Login() {
       );
 
       localStorage.setItem("token", res.data.token);
-
+window.location.href = "/dashboard";
       alert("Login successful ✅");
       localStorage.setItem("token", res.data.token);
       setIsLoggedIn(true);
