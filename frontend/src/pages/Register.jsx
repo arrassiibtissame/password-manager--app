@@ -2,7 +2,7 @@ import {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
-function Register (){
+function Register ({setIsLoggedIn}){
     const [username, setUsername] = useState("");
     const [email, setEmail]=useState("");
     const [password,setPassword]= useState("");
@@ -20,10 +20,14 @@ function Register (){
                     password : password,
                 }
             );
+            console.log("Registration response:", res.data);
+            //save token 
+            localStorage.setItem("token", res.data.token);
+            setIsLoggedIn(true);
             setMessage("✅ Registered successfully!");
             setTimeout(() => {
                 navigate("/dashboard");
-            }, 2000);
+            }, 1000);
         }
         catch (err){
             setError("❌ Registration failed!");

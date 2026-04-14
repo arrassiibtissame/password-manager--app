@@ -30,7 +30,8 @@ function App() {
       />
 
       {/* REGISTER */}
-      <Route path="/register" element={<Register />} />
+      <Route path="/register" element=
+      {isLoggedIn ?(<Navigate to="/dashboard"/>) : (<Register setIsLoggedIn={setIsLoggedIn} />)} />
 
       {/* DASHBOARD */}
       <Route
