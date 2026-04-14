@@ -29,7 +29,7 @@ function Dashboard() {
     }
   };
 
-  // ✅ FUNCTION 2: ADD PASSWORD (OUTSIDE useEffect)
+  // ✅ FUNCTION 2: ADD PASSWORD 
   const handleAddPassword = async (e) => {
     e.preventDefault();
 
@@ -69,6 +69,25 @@ function Dashboard() {
   useEffect(() => {
     fetchPasswords();
   }, []);
+  const handleDelete = async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+        await axios.delete(`http://localhost:3000/api/passwords/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        fetchPasswords(); // refresh list
+    } catch (err) {
+        console.log(err);
+        alert("Error ❌");
+
+    }};
+    // logout function
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.location.href = "/"; // redirect to login
+    };
 
   return (
     <div style={{ maxWidth: "500px", margin: "auto" }}>
@@ -119,13 +138,14 @@ function Dashboard() {
             <p>{p.site}</p>
             <p>{p.username}</p>
             <p>{ showPasswords ? p.password : "••••••••" }</p>
+            <button onClick={()=> handleDelete(p.id)}>Delete </button>
           </div>
 
         ))
         
 
       )}
-       
+       <button onClick ={handleLogout}>Logout</button>  
     </div>
    
   );

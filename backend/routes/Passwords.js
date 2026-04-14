@@ -29,5 +29,17 @@ router.get("/", auth, async (req, res) => {
   }));
   res.json(decryptedPasswords);
 });
+// Delete a password
+router.delete("/:id",auth, async (req,res)=>{
+  try {
+    await Password.findOneAndDelete({_id:req.params.id,userId:req.user.id,// to ensure that user can only delete his own passwords
+      
+    });
+    res.json({message:"Password deleted"});
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({message:"Server error"});
+  }
+  });
 
 module.exports = router;
