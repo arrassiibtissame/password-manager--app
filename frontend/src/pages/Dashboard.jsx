@@ -74,6 +74,9 @@ const res = await api.get("/passwords");
   return (
     <div style={{ maxWidth: "500px", margin: "auto" }}>
       <h2>Dashboard</h2>
+      <div className="text-3xl font-bold text-blue-600">
+  Tailwind is working 🚀
+</div>
 
       <form onSubmit={handleAddPassword}>
         <h3>Add Password</h3>
