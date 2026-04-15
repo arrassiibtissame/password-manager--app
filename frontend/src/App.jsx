@@ -1,19 +1,14 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
-
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(()=>{
-   return  !!localStorage.getItem("token");
-});
+ const { token } = useContext(AuthContext);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-  };
+  
 
   return (
     <Routes>
@@ -21,27 +16,27 @@ function App() {
       <Route
         path="/"
         element={
-          isLoggedIn ? (
+          token ? 
             <Navigate to="/dashboard" />
-          ) : (
-            <Login setIsLoggedIn={setIsLoggedIn} />
-          )
+           : <Login />
+            
+          
         }
       />
 
       {/* REGISTER */}
       <Route path="/register" element=
-      {isLoggedIn ?(<Navigate to="/dashboard"/>) : (<Register setIsLoggedIn={setIsLoggedIn} />)} />
+      {token ?<Navigate to="/dashboard"/> : <Register />} />
 
       {/* DASHBOARD */}
       <Route
         path="/dashboard"
         element={
-          isLoggedIn ? (
-            <Dashboard handleLogout={handleLogout} setIsLoggedIn={setIsLoggedIn} />
-          ) : (
-            <Navigate to="/" />
-          )
+          token ? 
+            <Dashboard/>
+    
+           : <Navigate to="/" />
+          
         }
       />
     </Routes>
