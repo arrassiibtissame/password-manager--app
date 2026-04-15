@@ -3,6 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 function Sidebar() {
 const navigate = useNavigate();
 const { logout } = useAuth();
+ const isActive = (path) => location.pathname === path;
 const handleLogout = () => {
 logout();
 navigate("/");
