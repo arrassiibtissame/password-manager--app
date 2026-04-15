@@ -1,60 +1,75 @@
-import {useState, useContext} from "react";
-import { AuthContext } from "../context/AuthContext";
-import {useNavigate} from "react-router-dom";
-import api from "../api/axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
-function Register ({setIsLoggedIn}){
-    const [username, setUsername] = useState("");
-    const [email, setEmail]=useState("");
-    const [password,setPassword]= useState("");
-    const { login } = useContext(AuthContext);
+function Register() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const [message,setMessage] = useState("");
-    const [error,setError] = useState("");
-    const navigate = useNavigate();
+  const { register, loading, error } = useAuth();
+  const navigate = useNavigate();
 
-    const handleRegister =async () => {
-        try {
-          const res = await api.post("/auth/register", {username, email, password});
-            
-            //save token 
-           login(res.data.token);
-         
-            setMessage("✅ Registered successfully!");
-            setTimeout(() => {
-                navigate("/dashboard");
-            }, 1000);
-        }
-        catch (err){
-            setError("❌ Registration failed!");
-            console.log(err.response?.data || err.message);
-        }
-        };
-        return (
-            <div style={{maxWidth:"400px",margin:"auto"}}>
-                <h2>Register</h2>
-                <input
-  placeholder="Username"
-  value={username}
-  onChange={(e) => setUsername(e.target.value)}
-/>
-                <input 
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                />
-                <input 
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}/>
-                <button onClick={handleRegister}>Register  </button>
-                <p>Already have an account? <a href="/">Login </a></p>  
-                {message && <p style={{ color: "green" }}>{message}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+  const handleRegister = async () => {
+    try {
+      await register(username, email, password);
+      navigate("/dashboard");
+    } catch {}
+  };
 
-            </div>
-        );
-    }
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black text-white">
+
+      <div className="w-[350px] p-6 rounded-2xl bg-white/10 backdrop-blur border border-white/20">
+
+        <h1 className="text-2xl font-bold mb-6 text-center">
+          Create Account 🚀
+        </h1>
+
+        <input
+          className="w-full p-2 mb-3 rounded bg-black/30 border border-white/20"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+
+        <input
+          className="w-full p-2 mb-3 rounded bg-black/30 border border-white/20"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          className="w-full p-2 mb-3 rounded bg-black/30 border border-white/20"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        {error && (
+          <p className="text-red-400 text-sm mb-2">{error}</p>
+        )}
+
+        <button
+          onClick={handleRegister}
+          disabled={loading}
+          className="w-full bg-green-600 hover:bg-green-700 p-2 rounded"
+        >
+          {loading ? "Loading..." : "Register"}
+        </button>
+
+        <p className="text-sm mt-4 text-center">
+          Already have an account?{" "}
+          <a href="/" className="text-blue-400">
+            Login
+          </a>
+        </p>
+
+      </div>
+    </div>
+  );
+}
+
 export default Register;
