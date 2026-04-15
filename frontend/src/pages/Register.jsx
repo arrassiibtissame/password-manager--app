@@ -1,6 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import api from "../api/axios";
 
 function Register ({setIsLoggedIn}){
     const [username, setUsername] = useState("");
@@ -13,13 +14,7 @@ function Register ({setIsLoggedIn}){
 
     const handleRegister =async () => {
         try {
-            const res = await axios.post (
-                "http://localhost:3000/api/auth/register",{
-                    username : username,
-                    email : email,
-                    password : password,
-                }
-            );
+           api.get("/passwords");
             console.log("Registration response:", res.data);
             //save token 
             localStorage.setItem("token", res.data.token);

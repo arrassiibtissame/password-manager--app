@@ -1,6 +1,7 @@
 import { useEffect, useState,useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import api from "../api/axios";
 
 function Dashboard() {
   const [passwords, setPasswords] = useState([]);
@@ -16,12 +17,9 @@ function Dashboard() {
   const fetchPasswords = async () => {
 
     try {
-      const res = await axios.get("http://localhost:3000/api/passwords", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      
+api.get("/passwords");
+     
       setPasswords(res.data);
     } catch (err) {
       console.log(err);
@@ -34,20 +32,7 @@ function Dashboard() {
 
 
     try {
-      await axios.post(
-        "http://localhost:3000/api/passwords",
-        {
-          title,
-          site,
-          username,
-          password,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+     api.get("/passwords");
 
       alert("Password added ✅");
 
@@ -70,11 +55,8 @@ function Dashboard() {
   const handleDelete = async (id) => {
     console.log("Deleting password with id:", id);
     try {
-        await axios.delete(`http://localhost:3000/api/passwords/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        api.get("/passwords");
+        alert("Password deleted ✅");
         fetchPasswords(); // refresh list
     } catch (err) {
         console.log(err);

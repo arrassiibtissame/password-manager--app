@@ -4,6 +4,7 @@ import { AuthContext } from "./context/AuthContext";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
  const { token } = useContext(AuthContext);
@@ -29,16 +30,13 @@ function App() {
       {token ?<Navigate to="/dashboard"/> : <Register />} />
 
       {/* DASHBOARD */}
-      <Route
+      <Route 
         path="/dashboard"
         element={
-          token ? 
-            <Dashboard/>
-    
-           : <Navigate to="/" />
-          
-        }
-      />
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
     </Routes>
   );
 }
