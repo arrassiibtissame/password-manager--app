@@ -1,9 +1,12 @@
 import Modal from "../ui/Modal";
 import Input from "../ui/Input";
-function PasswordModal({open,onClose,data,setData,onSave}){
-    return(
-        <Modal open={open} onClose={onClose}>
-             <h2 className="text-xl mb-4">Edit Password</h2>
+import Button from "../ui/Button";
+
+function PasswordModal({ open, onClose, data, setData, onSave }) {
+  return (
+    <Modal open={open} onClose={onClose}>
+
+      <h2 className="text-xl mb-4">Edit Password</h2>
 
       <Input
         placeholder="Title"
@@ -24,15 +27,24 @@ function PasswordModal({open,onClose,data,setData,onSave}){
       />
 
       <Input
+        type="password"
         placeholder="Password"
         value={data.password}
         onChange={(e) => setData({ ...data, password: e.target.value })}
       />
 
-      <button onClick={onSave} className="mt-4 bg-green-600 p-2 rounded">
-        Save
-      </button>
-        </Modal>
-    );
+      <div className="flex justify-end gap-2">
+        <Button onClick={onClose} variant="danger">
+          Cancel
+        </Button>
+
+        <Button onClick={onSave} variant="success">
+          Save
+        </Button>
+      </div>
+
+    </Modal>
+  );
 }
+
 export default PasswordModal;
