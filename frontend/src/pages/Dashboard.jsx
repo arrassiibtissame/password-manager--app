@@ -1,6 +1,6 @@
 import { useEffect, useState,useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import axios from "axios";
+
 import api from "../api/axios";
 
 function Dashboard() {
@@ -18,7 +18,7 @@ function Dashboard() {
 
     try {
       
-api.get("/passwords");
+const res = await api.get("/passwords");
      
       setPasswords(res.data);
     } catch (err) {
@@ -32,7 +32,7 @@ api.get("/passwords");
 
 
     try {
-     api.get("/passwords");
+     await api.post("/passwords", { title, site, username, password });
 
       alert("Password added ✅");
 
@@ -55,7 +55,7 @@ api.get("/passwords");
   const handleDelete = async (id) => {
     console.log("Deleting password with id:", id);
     try {
-        api.get("/passwords");
+        await api.delete(`/passwords/${id}`);
         alert("Password deleted ✅");
         fetchPasswords(); // refresh list
     } catch (err) {

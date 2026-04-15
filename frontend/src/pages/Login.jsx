@@ -11,7 +11,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      api.get("/passwords");
+      const res = await api.post("/auth/login", {email, password});
 
       login(res.data.token);
       alert("Login successful ✅");    

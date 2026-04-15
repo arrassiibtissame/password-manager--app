@@ -1,5 +1,5 @@
-import {useState} from "react";
-import axios from "axios";
+import {useState, useContext} from "react";
+import { AuthContext } from "../context/AuthContext";
 import {useNavigate} from "react-router-dom";
 import api from "../api/axios";
 
@@ -7,6 +7,7 @@ function Register ({setIsLoggedIn}){
     const [username, setUsername] = useState("");
     const [email, setEmail]=useState("");
     const [password,setPassword]= useState("");
+    const { login } = useContext(AuthContext);
 
     const [message,setMessage] = useState("");
     const [error,setError] = useState("");
@@ -14,11 +15,11 @@ function Register ({setIsLoggedIn}){
 
     const handleRegister =async () => {
         try {
-           api.get("/passwords");
-            console.log("Registration response:", res.data);
+          const res = await api.post("/auth/register", {username, email, password});
+            
             //save token 
-            localStorage.setItem("token", res.data.token);
-            setIsLoggedIn(true);
+           login(res.data.token);
+         
             setMessage("✅ Registered successfully!");
             setTimeout(() => {
                 navigate("/dashboard");
