@@ -1,14 +1,15 @@
-import sidebar from "./Sidebar";
-function Layout({ children }) {
-    return(
-        <div className="flex h-screen bg-gray-950 text-white">
-            {/* SIDEBARE */}
-            <sidebare />
-            {/* Main content */}
-            <main className="flex-1 p-6">
-                {children}
-            </main>
+import sidebare from "./Sidebar";
+import Navbar from "./Navbar";
+
+function Layout ({children}){
+    return (
+        <div style={ { display: "flex"}}>
+            <sidebare/>
+            <div style= {{flex:1}}>
+                <Navbar/>
+                <div style={{padding:"20px"}}></div>
+            </div>
         </div>
     );
 }
-export default Layout;
+export default Layout ;

@@ -1,0 +1,30 @@
+/*reset*/
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+/*base*/
+ body{
+    font-family: Inter, system-ui, Arial, sans-serifs;
+    background : #0f172a;
+    color : white;
+ }
+ /*link*/
+
+ a{
+    color: #60a5fa;
+    text-decoration: none;
+ }
+ /*input */
+ input {
+    background: #1f2937;
+    color: white ;
+    border: 1px solid #374151;
+ }
+
+/*button*/
+button{
+    font-weight: 500;
+}
