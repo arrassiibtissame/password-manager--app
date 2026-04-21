@@ -1,10 +1,11 @@
-import {useState, useEffect, useContext }from "react";
-import {AuthContext} from "../context/AuthContext";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import api from "../api/axios";
 
 import Layout from "../components/layout/Layout";
-import PasswordCard from "../components/passwords/PasswordCard";
+import PasswordList from "../components/passwords/PasswordList";
 import PasswordForm from "../components/passwords/PasswordForm";
+
 function Dashboard() {
   const { token } = useContext(AuthContext);
   const [passwords, setPasswords] = useState([]);
@@ -20,11 +21,11 @@ function Dashboard() {
 
   return (
     <Layout>
-      <h2>Your Passwords </h2>
+      <h2>Your Passwords 🔐</h2>
 
       <PasswordForm onSuccess={fetchPasswords} />
 
-      <PasswordCard
+      <PasswordList
         passwords={passwords}
         refresh={fetchPasswords}
       />

@@ -1,50 +1,78 @@
-import Modal from "../ui/Modal";
-import Input from "../ui/Input";
-import Button from "../ui/Button";
+import {useState, useEffect} from "react";
+import api from "../../api/axios";
 
-function PasswordModal({ open, onClose, data, setData, onSave }) {
-  return (
-    <Modal open={open} onClose={onClose}>
+function PasswordModal ({isOpen, onClose, password, refresh}){
+  const [form, setForm]=useState({
+    title:"",
+    site:"",
+    username:"",
+    password:"",
+  });
+  //fill the form when editing
+  useEffect(()=>{
+    if (password){
+      setForm(password);
+    }
+  },[password]);
+  
+  const handleChange =(e) => {
+    setForm ({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleUpdate = async() => {
+    try{
+      await api.put(`/passwords/${password._id}`,form);
+      refresh();
+      onClose();
 
-      <h2 className="text-xl mb-4">Edit Password</h2>
+    }
+    catch (err){
+      console.log(err);
+      alert ("Update failed");
+    }
+  };
+  if(!isOpen) return null;
+  return( 
+    <div
+    style ={overlayStyle}>
+      <div style ={modalStyle}>
+        <h2>Edit Password</h2>
+        <input name ="title" value ={form.title} onChange={handleChange}/>
+        <input name ="site" value ={form.site} onChange={handleChange}/>
+        <input name ="username" value ={form.username} onChange={handleChange}/>
+        <input name ="password" value ={form.password} onChange={handleChange}/>
 
-      <Input
-        placeholder="Title"
-        value={data.title}
-        onChange={(e) => setData({ ...data, title: e.target.value })}
-      />
-
-      <Input
-        placeholder="Site"
-        value={data.site}
-        onChange={(e) => setData({ ...data, site: e.target.value })}
-      />
-
-      <Input
-        placeholder="Username"
-        value={data.username}
-        onChange={(e) => setData({ ...data, username: e.target.value })}
-      />
-
-      <Input
-        type="password"
-        placeholder="Password"
-        value={data.password}
-        onChange={(e) => setData({ ...data, password: e.target.value })}
-      />
-
-      <div className="flex justify-end gap-2">
-        <Button onClick={onClose} variant="danger">
-          Cancel
-        </Button>
-
-        <Button onClick={onSave} variant="success">
-          Save
-        </Button>
+<div style={{marginTop:"10px"}}>
+  <button onClick = {handleUpdate} >Save</button>
+  <button onClick ={onClose}>Cancel</button>
+</div>
       </div>
-
-    </Modal>
+    </div>
   );
-}
 
+  
+}
+const overlayStyle ={
+  position: "fixed",
+  top:0,
+  left:0,
+  right:0,
+  bottom:0,
+  background:"rgba (0,0,0,0.6)",
+  display:"flex",
+  alignItems:"center",
+  justifyContent:"center",
+
+};
+const modalStyle={
+  background:"white",
+  padding:"20px",
+  borderRadius:"10px",
+  width:"300px",
+  display:"flex",
+  flexDirection:"column",
+  gap:"10px",
+};
 export default PasswordModal;
