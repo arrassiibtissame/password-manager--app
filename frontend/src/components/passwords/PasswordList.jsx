@@ -1,7 +1,13 @@
+import PasswordModal from "./PasswordModal";
+import {useState }from "react";
 import PasswordCard from "./PasswordCard";
 import api from "../../api/axios";
 
+
+
 function PasswordList ({passwords,refresh}){
+    const [selected, setSelected] = useState(null);
+const [open, setOpen] = useState(false);
     const handleDelete =async (id) => {
         try {
         await api.delete (`/passwords/${id}`);
@@ -12,8 +18,8 @@ refresh();
     }
 };
 const handleEdit =(password )=> {
-    console.log("Edit clicked:",password);
-    //to connect the modal
+    setSelected(password);
+    setOpen(true);
 }
 return (
     <div>
@@ -30,6 +36,11 @@ return (
         )
     
     }
+    <PasswordModal
+    isOpen = {open}
+    onClose={() => setOpen(false)}
+    password= {selected}
+    refresh={refresh}/>
     </div>
 
 );
