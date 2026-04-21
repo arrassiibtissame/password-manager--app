@@ -1,23 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import authService from "../services/authService";
+import api from "../api/axios";
+import { useAuth } from "../hooks/useAuth";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth();
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async () => {
     try {
       setLoading(true);
 
-      const data = await authService.login(email, password);
+      const res = await api.post("/auth/login", {
+        email,
+        password,
+      });
 
-      login(data.token);
+      login(res.data.token);
 
       navigate("/dashboard");
     } catch (err) {
@@ -28,7 +31,7 @@ function Login() {
   };
 
   return (
-    <div className="auth-container">
+    <div>
       <h1>Login</h1>
 
       <input
@@ -45,8 +48,12 @@ function Login() {
       />
 
       <button onClick={handleLogin} disabled={loading}>
-        {loading ? "Logging in..." : "Login"}
+        {loading ? "Loading..." : "Login"}
       </button>
+
+      <p>
+        Don't have an account? <a href="/register">Register</a>
+      </p>
     </div>
   );
 }
