@@ -1,14 +1,30 @@
-function PasswordCard({item,show,onDelete}){
-    return (
-        <div className="p-4 bg-white/10 border border-white/20 rounded-xl mb-3 text-white">
-            <h3 className="text-lg font-bold">{item.title}</h3>
-            <p>{item.site}</p>
-            <p>{item.username}</p>
-            <p className ="mt-2">
-                { show ? item.password : "••••••••" }
+import {useState} from "react";
+function PasswordCard ({password,onDelete, onEdit}) {
+    const [show, setShow]=useState(false);
 
-            </p>
-            <button onClick={()=> onDelete(item._id)} className="mt-3 bg-red-500 hover:bg-red-500 px-3 py-1 rounded">Delete </button>
+    return (
+        <div 
+        style= {{
+            background: "#1f2937",
+            padding: "15px",
+            borderRadius:"10px",
+            marginBottom: "10px",
+            color:"white",
+        }}>
+            <h3>{password.title}</h3>
+            <p><strong>Site:</strong>{password.site}</p>
+            <p><strong>Username:</strong>{password.username}</p>
+<p>
+    <strong>Password:</strong>{" "}
+    {show ? password.password :"......."}
+</p>
+<div style ={{display:"flex",gap:"10px",marginTop:"10px"}}>
+    <button onClick ={()=> setShow (!show)}>
+        {show ? "Hide" : "Show 👁"}
+    </button>
+    <button onClick ={() => onEdit(password)}>Edit</button>
+    <button onClick {() => onDelete(password._id)}>Delete</button>
+</div>
         </div>
     );
 }
