@@ -23,7 +23,7 @@ function PasswordCard ({password,onDelete, onEdit}) {
         {show ? "Hide" : "Show 👁"}
     </button>
     <button onClick ={() => onEdit(password)}>Edit</button>
-    <button onClick {() => onDelete(password._id)}>Delete</button>
+    <button onClick ={() => onDelete(password._id)}>Delete</button>
 </div>
         </div>
     );
