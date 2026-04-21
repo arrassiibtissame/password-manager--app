@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {loginUser,registerUser} from "../services/authService";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 export function useAuth(){
     const [loadding, setLoading]= useState(false);
     const [error, setError] = useState("");
@@ -35,5 +35,5 @@ export function useAuth(){
 const logout = () =>{
     localStorage.removeItem("token");
 };
-return {login, register, logout, loadding, error};
+return useContext(AuthContext);
 };
