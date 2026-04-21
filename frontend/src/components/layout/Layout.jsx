@@ -7,7 +7,7 @@ function Layout ({children}){
             <sidebare/>
             <div style= {{flex:1}}>
                 <Navbar/>
-                <div style={{padding:"20px"}}></div>
+                <main style={{padding:"20px"}}> {children} </main>
             </div>
         </div>
     );

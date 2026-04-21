@@ -1,41 +1,23 @@
-import {useNavigate} from"react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
-function Sidebar() {
-const navigate = useNavigate();
-const { logout } = useAuth();
- const isActive = (path) => location.pathname === path;
-const handleLogout = () => {
-logout();
-navigate("/");
-};
-return (
-    <div className="w-64 bg-gray-900 border-r border-gray-800 p-5 flex flex-col">
-        {/* Logo */}
-        <h1 className="text-2xl front-bold mb-8">MyVault</h1>
-        {/* Navigation */}
-        <button 
-        onClick={()=> navigate("/dashboard")}
-        className="text-left p-2 rounded hover:bg-gray-800"> Dashboard</button>
-        
-        <button 
-        onClick={()=> navigate ("/dashboard")}
-        className="text-left p-2 rounded hover:bg-gray-800">Paswwords</button>
-        <button
-         className="text-left p-2 rounded hover:bg-gray-800"
-      >
-        Settings
-      </button>
+import { useNavigate } from "react-router-dom";
+function Sidebar(){
+  const navigate =useNvigate();
+  return (
+    <div 
+    style={{
+      width:"220px",
+      background:"#111827",
+      color:"white",
+      padding:"20px",
+      display:"flex",
+      flexDirection:"column",
+      gap:"15px",
 
-      {/* LOGOUT */}
-      <button
-        onClick={handleLogout}
-        className="mt-auto bg-red-600 hover:bg-red-700 p-2 rounded"
-      >
-        Logout
-      </button>
-
+    }}
+    >
+      <h2>Password Manager</h2>
+      <button onClick={() => navigate("/dashboard")}>Dashboard</button>
+      <button onClick={() => navigate ("/")}>Logout</button>
     </div>
   );
 }
-
 export default Sidebar;
