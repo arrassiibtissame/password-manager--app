@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 function Sidebar(){
-  const navigate =useNvigate();
+  const navigate =useNavigate();
   return (
     <div 
     style={{
