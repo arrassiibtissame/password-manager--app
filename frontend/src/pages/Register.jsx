@@ -11,27 +11,32 @@ function Register() {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
+    if (!username || !email || !password) {
+      return alert("Please fill all fields");
+    }
+
     try {
       setLoading(true);
 
-      const res = await api.post("/auth/register", {
+      await api.post("/auth/register", {
         username,
         email,
         password,
       });
 
-      alert("Registered successfully ✅");
+      alert("Account created successfully ✅");
 
       navigate("/");
     } catch (err) {
-      alert(err.response?.data?.message || "Registration failed");
+      console.log(err);
+      alert(err.response?.data?.message || "Register failed ❌");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: "400px", margin: "auto" }}>
       <h2>Register</h2>
 
       <input
@@ -41,6 +46,7 @@ function Register() {
       />
 
       <input
+        type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -54,7 +60,7 @@ function Register() {
       />
 
       <button onClick={handleRegister} disabled={loading}>
-        {loading ? "Loading..." : "Register"}
+        {loading ? "Creating..." : "Register"}
       </button>
 
       <p>

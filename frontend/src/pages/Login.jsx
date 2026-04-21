@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
-import { useAuth } from "../hooks/useAuth";
+import { AuthContext } from "../context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      return alert("Please fill all fields");
+    }
+
     try {
       setLoading(true);
 
@@ -22,17 +26,19 @@ function Login() {
 
       login(res.data.token);
 
+      alert("Login successful ✅");
       navigate("/dashboard");
     } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
+      console.log(err);
+      alert(err.response?.data?.message || "Login failed ❌");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div style={{ maxWidth: "400px", margin: "auto" }}>
+      <h2>Login</h2>
 
       <input
         placeholder="Email"
@@ -48,7 +54,7 @@ function Login() {
       />
 
       <button onClick={handleLogin} disabled={loading}>
-        {loading ? "Loading..." : "Login"}
+        {loading ? "Logging in..." : "Login"}
       </button>
 
       <p>
