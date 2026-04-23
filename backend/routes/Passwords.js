@@ -25,7 +25,7 @@ router.get("/", auth, async (req, res) => {
     const passwords = await Password.find({ user: req.user.id });
    const decryptedPasswords = passwords.map(p => ({
     ...p._doc,
-    password: decrypt(p.password)
+    password: decrypt(p.password ||"")
   }));
   res.json(decryptedPasswords);
 });
