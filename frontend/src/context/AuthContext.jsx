@@ -1,10 +1,13 @@
 import { createContext, useState, useEffect } from "react";
+import axios from "../api/axios";
+import {useNavigate}from "react-router-dom";
 
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
@@ -13,6 +16,20 @@ export default function AuthProvider({ children }) {
     }
   }, []);
 
+  //  REGISTER
+  const register = async (formData) => {
+    try {
+      const res = await axios.post("/api/auth/register", formData);
+
+      setUser(res.data.user);
+      localStorage.setItem("token", res.data.token);
+
+      navigate("/dashboard");
+    } catch (err) {
+      console.log("Register error:", err.response?.data || err.message);
+      throw err;
+    }
+  };
   const login = (token) => {
     setToken(token);
     localStorage.setItem("token", token);
