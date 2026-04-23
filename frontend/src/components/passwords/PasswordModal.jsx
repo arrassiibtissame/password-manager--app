@@ -11,7 +11,12 @@ function PasswordModal ({isOpen, onClose, password, refresh}){
   //fill the form when editing
   useEffect(()=>{
     if (password){
-      setForm(password);
+      setForm({
+        title: password.title || "",
+        site: password.site || "",
+        username: password.username || "",
+        password: password.password || "",
+      });
     }
   },[password]);
   
@@ -39,10 +44,10 @@ function PasswordModal ({isOpen, onClose, password, refresh}){
     style ={overlayStyle}>
       <div style ={modalStyle}>
         <h2>Edit Password</h2>
-        <input name ="title" value ={form.title} onChange={handleChange}/>
-        <input name ="site" value ={form.site} onChange={handleChange}/>
-        <input name ="username" value ={form.username} onChange={handleChange}/>
-        <input name ="password" value ={form.password} onChange={handleChange}/>
+        <input name ="title" value ={form.title || ""} onChange={handleChange}/>
+        <input name ="site" value ={form.site || ""} onChange={handleChange}/>
+        <input name ="username" value ={form.username || ""} onChange={handleChange}/>
+        <input name ="password" value ={form.password || ""} onChange={handleChange}/>
 
 <div style={{marginTop:"10px"}}>
   <button onClick = {handleUpdate} >Save</button>

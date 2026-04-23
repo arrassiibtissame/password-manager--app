@@ -45,5 +45,23 @@ res.json({message:"Password deleted"});
     res.status(500).json({message:"Server error"});
   }
 });
+// update password 
+router.put ("/:id",async (req, res) =>{
+  try{
+    const updatedPassword =await Password.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {new: true}
+    );
+    if (!updatedPassword) {
+      return res.status(404).json({ message: "Password not found" });
+    }
+
+    res.json(updatedPassword);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Update failed" });
+  }
+});
 
 module.exports = router;
