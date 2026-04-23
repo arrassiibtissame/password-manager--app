@@ -19,13 +19,15 @@ export default function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    setToken(null);
+     localStorage.removeItem("token");
+  
     setUser(null);
-    localStorage.removeItem("token");
+    Navigate("/login");
+   
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, login, logout }}>
+    <AuthContext.Provider value={{ token, user, login,register, logout }}>
       {children}
     </AuthContext.Provider>
   );
