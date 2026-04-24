@@ -27,5 +27,6 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-
+console.log("KEY:", process.env.ENCRYPTION_KEY);
+console.log("KEY LENGTH:", process.env.ENCRYPTION_KEY?.length);
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

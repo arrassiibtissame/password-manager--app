@@ -28,10 +28,11 @@ router.get("/", auth, async (req, res) => {
       try {
         return {
           ...p._doc,
-          password: p.password ? decrypt(p.password) : null,
+          password: decrypt(p.password),
         };
       } catch (err) {
-        console.log("Failed to decrypt password:", p._id);
+        console.log("Skipping corrupted password:", p._id);
+
         return {
           ...p._doc,
           password: null,
@@ -41,11 +42,10 @@ router.get("/", auth, async (req, res) => {
 
     res.json(decryptedPasswords);
   } catch (err) {
-    console.error(err);
+    console.error("GET /passwords crashed:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
-  
 
 // Delete a password
 router.delete("/:id",auth, async (req,res)=>{
@@ -77,19 +77,15 @@ router.put("/:id", auth, async (req, res) => {
       updatedData.password = encrypt(password);
     }
 
-    const updatedPassword = await Password.findOneAndUpdate(
+    const updated = await Password.findOneAndUpdate(
       { _id: req.params.id, user: req.user.id },
       updatedData,
       { new: true }
     );
 
-    if (!updatedPassword) {
-      return res.status(404).json({ message: "Password not found" });
-    }
-
-    res.json(updatedPassword);
+    res.json(updated);
   } catch (err) {
-    console.error(err);
+    console.error("UPDATE ERROR:", err);
     res.status(500).json({ message: "Update failed" });
   }
 });
