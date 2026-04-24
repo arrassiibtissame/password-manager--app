@@ -2,27 +2,30 @@ const crypto = require("crypto");
 
 const algorithm = "aes-256-cbc";
 
-//  Read from .env
-const key = Buffer.from(process.env.CRYPTO_SECRET, "utf-8");
-const iv = Buffer.from(process.env.CRYPTO_IV, "utf-8");
+// ✅ use plain string (NOT hex)
+const key = Buffer.from(process.env.ENCRYPTION_KEY, "utf-8");
 
-//  Encrypt
-exports.encrypt = (text) => {
+// static IV for now (later we improve it)
+const iv = Buffer.alloc(16, 0);
+
+// 🔐 ENCRYPT
+const encrypt = (text) => {
   const cipher = crypto.createCipheriv(algorithm, key, iv);
+
   let encrypted = cipher.update(text, "utf-8", "hex");
   encrypted += cipher.final("hex");
+
   return encrypted;
 };
 
-//  Decrypt
-exports.decrypt = (encryptedText) => {
-  try {
-    const decipher = crypto.createDecipheriv(algorithm, key, iv);
-    let decrypted = decipher.update(encryptedText, "hex", "utf-8");
-    decrypted += decipher.final("utf-8");
-    return decrypted;
-  } catch (err) {
-    console.log("❌ Decryption error:", err.message);
-    return "ERROR";
-  }
+// 🔓 DECRYPT
+const decrypt = (encryptedText) => {
+  const decipher = crypto.createDecipheriv(algorithm, key, iv);
+
+  let decrypted = decipher.update(encryptedText, "hex", "utf-8");
+  decrypted += decipher.final("utf-8");
+
+  return decrypted;
 };
+
+module.exports = { encrypt, decrypt };
