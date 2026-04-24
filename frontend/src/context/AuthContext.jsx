@@ -9,7 +9,7 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // ✅ Load token on refresh
+  //  Load token on refresh
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
 
@@ -18,7 +18,7 @@ export default function AuthProvider({ children }) {
     }
   }, []);
 
-  // ✅ REGISTER
+  //  REGISTER
   const register = async (formData) => {
     try {
       const res = await axios.post("/api/auth/register", formData);
@@ -35,7 +35,7 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  // ✅ LOGIN
+  //  LOGIN
   const login = async (formData) => {
     try {
       const res = await axios.post("/api/auth/login", formData);
@@ -52,14 +52,14 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  // ✅ LOGOUT
+  //  LOGOUT
   const logout = () => {
     localStorage.removeItem("token");
 
-    setToken(null);   // ✅ IMPORTANT
+    setToken(null);   
     setUser(null);
 
-    navigate("/login"); // ✅ FIX
+    navigate("/login"); 
   };
 
   return (
