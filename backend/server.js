@@ -1,10 +1,12 @@
+require("dotenv").config();
+console.log("ENCRYPTION_KEY:", process.env.ENCRYPTION_KEY);
 const express = require("express");
+
 const cors = require("cors");
 const connectDB = require("./config/db");
-require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
-const passwordRoutes = require("./routes/passwords");
+const passwordRoutes = require("./routes/Passwords");
 
 const app = express();
 
