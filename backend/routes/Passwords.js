@@ -24,11 +24,20 @@ router.get("/", auth, async (req, res) => {
   
     const passwords = await Password.find({ user: req.user.id });
    const decryptedPasswords = passwords.map(p => ({
+   try {
+    return {
     ...p._doc,
-    password: decrypt(p.password || "")
-  }));
-  res.json(decryptedPasswords);
-});
+    password: p.password ? decrypt(p.password):null};
+  }
+  catch (err){
+    console.log ("Failed to decrypt one password ", p._id);
+    return {
+      ...p._doc,
+      password:null};
+    }
+  });
+  
+
 // Delete a password
 router.delete("/:id",auth, async (req,res)=>{
   try {

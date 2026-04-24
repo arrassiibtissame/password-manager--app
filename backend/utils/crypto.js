@@ -28,13 +28,17 @@ const encrypt = (text) => {
 };
 
 // DECRYPT
-const decrypt = (encryptedText) => {
-  const decipher = crypto.createDecipheriv(algorithm, keyBuffer, iv);
-
-  let decrypted = decipher.update(encryptedText, "hex", "utf-8");
-  decrypted += decipher.final("utf-8");
-
-  return decrypted;
+const decrypt = (encryptedText)=> {
+  try{
+    const decipher = crypto.createDecipheriv(algorithm, key, iv);
+    let decrypted = decipher.update(encryptedText, "hex","utf-8");
+    decrypted += decipher.final("utf-8");
+    return decrypted ;
+  }
+  catch (err){
+    console.log("Decryption failed for:",encryptedText);
+    return null;
+  }
 };
 
 module.exports = { encrypt, decrypt };
