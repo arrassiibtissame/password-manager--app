@@ -2,13 +2,12 @@ const crypto = require("crypto");
 
 const algorithm = "aes-256-cbc";
 
-// ✅ use plain string (NOT hex)
-const key = Buffer.from(process.env.ENCRYPTION_KEY, "utf-8");
-
+//  use plain string (NOT hex)
+const key = Buffer.from(process.env.ENCRYPTION_KEY, "utf8");
 // static IV for now (later we improve it)
 const iv = Buffer.alloc(16, 0);
 
-// 🔐 ENCRYPT
+//  ENCRYPT
 const encrypt = (text) => {
   const cipher = crypto.createCipheriv(algorithm, key, iv);
 
@@ -18,7 +17,7 @@ const encrypt = (text) => {
   return encrypted;
 };
 
-// 🔓 DECRYPT
+//  DECRYPT
 const decrypt = (encryptedText) => {
   const decipher = crypto.createDecipheriv(algorithm, key, iv);
 
