@@ -34,7 +34,7 @@ function App() {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <Dashboard />
+           token ?  <Dashboard /> : <Navigate to ="/login"/>
           </ProtectedRoute>
         } />
     </Routes>

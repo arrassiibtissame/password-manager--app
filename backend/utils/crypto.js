@@ -1,41 +1,28 @@
 const crypto = require("crypto");
 
 const algorithm = "aes-256-cbc";
-const key = Buffer.from(process.env.ENCRYPTION_KEY, "hex"); 
-const ivLength = 16;
 
-// ENCRYPT
-function encrypt(text) {
-  const iv = crypto.randomBytes(ivLength);
+//  Read from .env
+const key = Buffer.from(process.env.CRYPTO_SECRET, "utf-8");
+const iv = Buffer.from(process.env.CRYPTO_IV, "utf-8");
+
+//  Encrypt
+exports.encrypt = (text) => {
   const cipher = crypto.createCipheriv(algorithm, key, iv);
-
-  let encrypted = cipher.update(text, "utf8", "hex");
+  let encrypted = cipher.update(text, "utf-8", "hex");
   encrypted += cipher.final("hex");
+  return encrypted;
+};
 
-  return iv.toString("hex") + ":" + encrypted;
-}
-
-// DECRYPT (SAFE VERSION)
-function decrypt(data) {
-  if (!data || typeof data !== "string") return "";
-
+//  Decrypt
+exports.decrypt = (encryptedText) => {
   try {
-    const parts = data.split(":");
-    if (parts.length !== 2) return "";
-
-    const iv = Buffer.from(parts[0], "hex");
-    const encryptedText = parts[1];
-
     const decipher = crypto.createDecipheriv(algorithm, key, iv);
-
-    let decrypted = decipher.update(encryptedText, "hex", "utf8");
-    decrypted += decipher.final("utf8");
-
+    let decrypted = decipher.update(encryptedText, "hex", "utf-8");
+    decrypted += decipher.final("utf-8");
     return decrypted;
   } catch (err) {
-    console.error("Decrypt error:", err.message);
-    return ""; // prevent crash
+    console.log("❌ Decryption error:", err.message);
+    return "ERROR";
   }
-}
-
-module.exports = { encrypt, decrypt };
+};
