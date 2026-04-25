@@ -37,7 +37,11 @@ function Login() {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "auto" }}>
+    <div className= "auth-container">
+      <div className="auth-left">
+        <img src ="/assets/img1.jpg">
+        </div>
+    <div  className = "auth-right" style={{ maxWidth: "400px", margin: "auto" }}>
       <h2>Login</h2>
 
       <input
@@ -61,7 +65,9 @@ function Login() {
         Don't have an account? <a href="/register">Register</a>
       </p>
     </div>
+    </div>
   );
-}
+  }
+
 
 export default Login;
