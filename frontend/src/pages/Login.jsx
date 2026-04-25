@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ function Login() {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      return alert("Please fill all fields");
+      toast.success("Please fill all fields");
     }
 
     try {
@@ -26,11 +27,11 @@ function Login() {
 
       
 
-      alert("Login successful ✅");
+      toast.success("Login successful");
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
-      alert(err.response?.data?.message || "Login failed ❌");
+     toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }

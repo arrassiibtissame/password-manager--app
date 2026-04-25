@@ -2,6 +2,8 @@ import { useState, useContext  } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
+
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -12,7 +14,8 @@ function Register() {
 
   const handleRegister = async () => {
     if (!username || !email || !password) {
-      return alert("Please fill all fields");
+     
+      return  toast.success("Please fill all fields");
     }
 
     try {
@@ -23,12 +26,11 @@ function Register() {
         email,
         password,
       });
-      alert("Account created successfully ✅");
-      navigate ("/dashboard");
+toast.success("You register successfully");      navigate ("/dashboard");
 
     } catch (err) {
       console.log(err);
-      alert(err.response?.data?.message || "Register failed ❌");
+      toast.success("Something went wrong");
     } finally {
       setLoading(false);
     }
