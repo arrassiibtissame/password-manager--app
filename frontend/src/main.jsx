@@ -8,9 +8,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
   <BrowserRouter>
   <AuthProvider>
-    <Toaster position="top-right" />
-
-    <App />
+  
+<App />
+<Toaster position="top-right" />
   </AuthProvider>
   </BrowserRouter>
 );

@@ -1,4 +1,4 @@
-import {useEfffect} from "react";
+import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 function Splash(){
     const navigate = useNavigate();
