@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(() =>
+  {
+    return localStorage.getItem("token");
+  });
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
@@ -27,8 +30,8 @@ export default function AuthProvider({ children }) {
       setUser(res.data.user);
 
       localStorage.setItem("token", res.data.token);
-
-      navigate("/dashboard");
+ return res.data;
+      
     } catch (err) {
       console.log("Register error:", err.response?.data || err.message);
       throw err;
@@ -44,8 +47,8 @@ export default function AuthProvider({ children }) {
       
 
       localStorage.setItem("token", res.data.token);
-
-      navigate("/dashboard"); 
+ return res.data;
+    
     } catch (err) {
       console.log("Login error:", err.response?.data || err.message);
       throw err;

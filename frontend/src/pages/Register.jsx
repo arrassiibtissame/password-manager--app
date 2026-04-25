@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState, useContext  } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
-
+import { AuthContext } from "../context/AuthContext";
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
+  const { register } = useContext(AuthContext);
 
   const handleRegister = async () => {
     if (!username || !email || !password) {
@@ -18,15 +18,14 @@ function Register() {
     try {
       setLoading(true);
 
-      await api.post("/auth/register", {
+       await register ({
         username,
         email,
         password,
       });
-
       alert("Account created successfully ✅");
+      navigate ("/dashboard");
 
-      navigate("/dashboard");
     } catch (err) {
       console.log(err);
       alert(err.response?.data?.message || "Register failed ❌");
