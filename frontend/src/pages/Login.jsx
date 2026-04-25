@@ -14,7 +14,7 @@ function Login() {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      toast.error("Please fill all fields");
+     return toast.error("Please fill all fields");
     }
 
     try {
