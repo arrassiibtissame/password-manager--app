@@ -2,7 +2,7 @@ import PasswordModal from "./PasswordModal";
 import {useState }from "react";
 import PasswordCard from "./PasswordCard";
 import api from "../../api/axios";
-
+import { motion } from "framer-motion";
 
 
 function PasswordList ({passwords,refresh}){
@@ -14,7 +14,7 @@ const [open, setOpen] = useState(false);
 refresh();
     }catch (err){
         console.log(err);
-        alert("Error deleting");
+        toast.error ("Something went wrong");
     }
 };
 const handleEdit =(password )=> {
@@ -23,15 +23,23 @@ const handleEdit =(password )=> {
 }
 return (
     <div>
-        {passwords.lenght ===0 ?
+        {passwords.length ===0 ?
         (<p>No passwords yet</p>) :(
             passwords.map((p) =>(
-                <PasswordCard 
-                key={p._id}
+                <motion.div
+    key={p._id}
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+  >
+    <PasswordCard 
                 password={p}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
                 />
+  </motion.div>
+
+
+
             ))
         )
     
