@@ -6,9 +6,10 @@ import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 ReactDOM.createRoot(document.getElementById("root")).render(
 
-<Toaster position="top-right" />
   <BrowserRouter>
   <AuthProvider>
+    <Toaster position="top-right" />
+
     <App />
   </AuthProvider>
   </BrowserRouter>

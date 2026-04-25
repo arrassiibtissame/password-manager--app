@@ -5,6 +5,7 @@ import api from "../api/axios";
 import Layout from "../components/layout/Layout";
 import PasswordList from "../components/passwords/PasswordList";
 import PasswordForm from "../components/passwords/PasswordForm";
+import { motion } from "framer-motion";
 
 function Dashboard() {
   const { token } = useContext(AuthContext);

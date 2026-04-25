@@ -40,7 +40,7 @@ function Login() {
   return (
     <div className= "auth-container">
       <div className="auth-left">
-        <img src ="/assets/img1.jpg">
+        <img src="/assets/img1.jpg" />
         </div>
     <div  className = "auth-right" style={{ maxWidth: "400px", margin: "auto" }}>
       <h2>Login</h2>
