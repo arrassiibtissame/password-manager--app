@@ -22,21 +22,24 @@ function Dashboard() {
 
   return (
     <Layout>
+      <div className="dashboard-header">
+        <h1>Welcome Back 🔐</h1>
+        <p>Your passwords are safe and encrypted.</p>
+      </div>
+
       <h2>Your Passwords 🔐</h2>
 
       <PasswordForm onSuccess={fetchPasswords} />
 
-      <PasswordList
-        passwords={passwords}
-        refresh={fetchPasswords}
-      />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <h1>Welcome Back 🔐</h1>
-        <p>Your passwords are safe.</p>
+        <PasswordList
+          passwords={passwords}
+          refresh={fetchPasswords}
+        />
       </motion.div>
     </Layout>
   );

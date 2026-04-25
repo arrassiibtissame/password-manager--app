@@ -1,23 +1,23 @@
-import { useNavigate } from "react-router-dom";
-function Sidebar(){
-  const navigate =useNavigate();
-  return (
-    <div 
-    style={{
-      width:"220px",
-      background:"#111827",
-      color:"white",
-      padding:"20px",
-      display:"flex",
-      flexDirection:"column",
-      gap:"15px",
+import { Link } from "react-router-dom";
 
-    }}
+function Sidebar() {
+  return (
+    <motion.div
+      initial={{ x: -100 }}
+      animate={{ x: 0 }}
     >
-      <h2>Password Manager</h2>
-      <button onClick={() => navigate("/dashboard")}>Dashboard</button>
-      <button onClick={() => navigate ("/")}>Logout</button>
-    </div>
+      {/* sidebar */}
+      <div className="sidebar">
+        <h2 className="logo">🔐 Password Manager</h2>
+
+        <nav className="menu">
+          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/passwords">Passwords</Link>
+          <Link to="/settings">Settings</Link>
+        </nav>
+      </div>
+    </motion.div>
   );
 }
+
 export default Sidebar;

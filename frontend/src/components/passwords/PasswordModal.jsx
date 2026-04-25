@@ -40,7 +40,11 @@ function PasswordModal ({isOpen, onClose, password, refresh}){
   };
   if(!isOpen) return null;
   return( 
-    <div
+    <motion.div
+  initial={{ scale: 0.9, opacity: 0 }}
+  animate={{ scale: 1, opacity: 1 }}
+>
+  <div
     style ={overlayStyle}>
       <div style ={modalStyle}>
         <h2>Edit Password</h2>
@@ -55,6 +59,7 @@ function PasswordModal ({isOpen, onClose, password, refresh}){
 </div>
       </div>
     </div>
+  </motion.div>
   );
 
   
