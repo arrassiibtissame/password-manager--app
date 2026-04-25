@@ -3,13 +3,12 @@ import Navbar from "./Navbar";
 
 function Layout ({children}){
     return (
-        <div style={ { display: "flex"}}>
-            <Sidebar/>
-            <div style= {{flex:1}}>
+        
+            <div className= "min-h-screen bg-gray-50">
                 <Navbar/>
-                <main style={{padding:"20px"}}> {children} </main>
+                <main className= "p-6"> {children} </main>
             </div>
-        </div>
+       
     );
 }
 export default Layout ;

@@ -19,12 +19,12 @@ function Login() {
     try {
       setLoading(true);
 
-      const res = await api.post("/auth/login", {
+        await login( {
         email,
         password,
       });
 
-      login(res.data.token);
+      
 
       alert("Login successful ✅");
       navigate("/dashboard");

@@ -21,9 +21,9 @@ export default function AuthProvider({ children }) {
   //  REGISTER
   const register = async (formData) => {
     try {
-      const res = await axios.post("/api/auth/register", formData);
+      const res = await axios.post("/auth/register", formData);
 
-      setToken(res.data.token); // ✅ FIX
+      setToken(res.data.token); 
       setUser(res.data.user);
 
       localStorage.setItem("token", res.data.token);
@@ -38,14 +38,14 @@ export default function AuthProvider({ children }) {
   //  LOGIN
   const login = async (formData) => {
     try {
-      const res = await axios.post("/api/auth/login", formData);
+      const res = await axios.post("/auth/login", formData);
 
       setToken(res.data.token);
-      setUser(res.data.user);
+      
 
       localStorage.setItem("token", res.data.token);
 
-      navigate("/dashboard"); // ✅ FIX
+      navigate("/dashboard"); 
     } catch (err) {
       console.log("Login error:", err.response?.data || err.message);
       throw err;

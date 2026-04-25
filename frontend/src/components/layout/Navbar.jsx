@@ -1,24 +1,26 @@
+import Button from "../ui/Button";
 import { useContext } from "react";
 import {AuthContext} from "../../context/AuthContext";
 
 function Navbar(){
-    const {user} =useContext (AuthContext);
+    const {logout} =useContext (AuthContext);
     return(
-        <div 
-        style ={{
-            height: "60px",
-            background:"#1f2937",
-            color:"white",
-            display:"flex",
-            alignItems:"center",
-            padding:"0 20px",
-            justifyContent:"space-between",
+       <header className="w-full h-16 bg-white border-b shadow-sm flex items-center justify-between px-6">
+        {/*left side*/}
+        <div className="flex items-center gap-2">
+            <div className= "w-8 h-8 bg-black rounded-md"></div>
+            <span className ="font-semibold text-lg text-gray-800">
+                Password Manager 
+                </span>
+                </div>
 
-        }}>
-            <h3>Dashboard</h3>
-            <span> Welcome {user?.name || "User"}</span>
+                {/*right side*/}
+                <div className= "flex items-center gap-3">
+                    <Button onClick={logout} variant="secondary">
+                        Lougout </Button>
 
-        </div>
-    );
+                        </div>
+                        </header>
+    )
 }
 export default Navbar;

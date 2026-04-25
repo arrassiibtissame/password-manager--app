@@ -26,7 +26,7 @@ function Register() {
 
       alert("Account created successfully ✅");
 
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       console.log(err);
       alert(err.response?.data?.message || "Register failed ❌");

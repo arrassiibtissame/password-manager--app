@@ -8,7 +8,7 @@ const User = require("../models/User");
 
 // Register route
 router.post("/register", async (req, res) => {
-  const { username, email, password } = req.body; // must match schema
+  const { username, email, password } = req.body; //  match schema
 
   try {
     let user = await User.findOne({ email });
