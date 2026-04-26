@@ -12,29 +12,25 @@ function Login() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-     return toast.error("Please fill all fields");
-    }
+ const handleLogin = async () => {
+  if (!email || !password) {
+    return toast.error("Please fill all fields");
+  }
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-        await login( {
-        email,
-        password,
-      });
+    await login({ email, password });
 
-      
+    toast.success("Login successful");
 
-      toast.success("Login successful");
-    } catch (err) {
-      console.log(err);
-     toast.error("Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (err) {
+    console.log(err);
+    toast.error("Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className= "auth-container">
