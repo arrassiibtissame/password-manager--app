@@ -23,6 +23,7 @@ function Login() {
     await login({ email, password });
 
     toast.success("Login successful");
+      navigate("/dashboard");
 
   } catch (err) {
     console.log(err);

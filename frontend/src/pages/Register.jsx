@@ -26,7 +26,8 @@ function Register() {
         email,
         password,
       });
-toast.success("You register successfully");    
+toast.success("You register successfully");  
+navigate("/dashboard");  
 
     } catch (err) {
       console.log(err);

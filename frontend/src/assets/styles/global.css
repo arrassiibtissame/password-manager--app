@@ -1,33 +1,36 @@
-/*reset*/
-*{
-    margin:0;
-    padding:0;
-    box-sizing: border-box;
+/* ─── Reset ─────────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/*base*/
- body{
-    font-family: Inter, system-ui, Arial, sans-serifs;
-    background : #0f172a;
-    color : white;
- }
- /*link*/
-
- a{
-    color: #60a5fa;
-    text-decoration: none;
- }
- /*input */
- input {
-    background: #1f2937;
-    color: white ;
-    border: 1px solid #374151;
- }
-
-/*button*/
-button{
-    font-weight: 500;
+/* ─── Base ───────────────────────────────────────────────── */
+body {
+  font-family: Inter, system-ui, Arial, sans-serif;
+  background: #0f172a;
+  color: white;
 }
+
+/* ─── Links ──────────────────────────────────────────────── */
+a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+/* ─── Inputs (global fallback) ───────────────────────────── */
+input {
+  background: #1f2937;
+  color: white;
+  border: 1px solid #374151;
+}
+
+/* ─── Buttons (global fallback) ──────────────────────────── */
+button {
+  font-weight: 500;
+}
+
+/* ─── Splash ─────────────────────────────────────────────── */
 .splash-container {
   height: 100vh;
   display: flex;
@@ -46,25 +49,64 @@ button{
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.1); }
   100% { transform: scale(1); }
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Auth layout ────────────────────────────────────────── */
 .auth-container {
   display: flex;
   height: 100vh;
+  background: #0f172a;
 }
 
 .auth-left {
   flex: 1;
-  background: #0f172a;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(135deg, #0f172a, #1e1040);
+  position: relative;
+  overflow: hidden;
+}
+
+/* decorative blurred blobs on the left panel */
+.auth-left::before,
+.auth-left::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.auth-left::before {
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 70%);
+  top: -80px;
+  left: -80px;
+}
+.auth-left::after {
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(109, 40, 217, 0.2) 0%, transparent 70%);
+  bottom: -60px;
+  right: -40px;
 }
 
 .auth-left img {
-  width: 80%;
+  width: 75%;
+  max-width: 420px;
+  border-radius: 20px;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+  opacity: 0.9;
 }
 
 .auth-right {
@@ -72,8 +114,232 @@ button{
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f9fafb;
+  background: #0f172a;
+  padding: 24px;
 }
+
+/* ─── Auth card ──────────────────────────────────────────── */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(120, 80, 220, 0.07);
+  border: 0.5px solid rgba(150, 100, 255, 0.25);
+  border-radius: 20px;
+  padding: 40px 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* glow blob inside card */
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(160, 110, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ─── Auth logo / branding ───────────────────────────────── */
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.auth-logo-icon {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #9b59f7, #6c3ed6);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.auth-logo-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.auth-logo-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.3px;
+}
+
+.auth-logo-name span {
+  color: #9b59f7;
+}
+
+.auth-logo-slogan {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* ─── Auth badge ─────────────────────────────────────────── */
+.auth-badge {
+  display: inline-block;
+  background: rgba(155, 89, 247, 0.12);
+  color: #c084fc;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  border: 0.5px solid rgba(155, 89, 247, 0.3);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* ─── Auth headings ──────────────────────────────────────── */
+.auth-heading {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 6px;
+  letter-spacing: -0.4px;
+}
+
+.auth-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 28px;
+}
+
+/* ─── Auth form fields ───────────────────────────────────── */
+.auth-field {
+  margin-bottom: 16px;
+}
+
+.auth-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 6px;
+}
+
+.auth-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(120, 80, 220, 0.08);
+  border: 0.5px solid rgba(150, 100, 255, 0.25);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+  color: white;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.auth-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.auth-input:focus {
+  border-color: rgba(155, 89, 247, 0.6);
+  box-shadow: 0 0 0 3px rgba(155, 89, 247, 0.1);
+}
+
+/* ─── Password strength indicator ───────────────────────── */
+.auth-strength {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.auth-strength-bar {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(150, 100, 255, 0.12);
+  transition: background 0.3s;
+}
+
+.auth-strength-bar.weak   { background: #e24b4a; }
+.auth-strength-bar.medium { background: #ef9f27; }
+.auth-strength-bar.strong { background: #9b59f7; }
+
+.auth-strength-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 5px;
+}
+
+/* ─── Auth button ────────────────────────────────────────── */
+.auth-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  background: linear-gradient(135deg, #9b59f7, #6c3ed6);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.auth-btn:hover   { opacity: 0.88; }
+.auth-btn:active  { transform: scale(0.98); }
+.auth-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── Auth divider ───────────────────────────────────────── */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.auth-divider-line {
+  flex: 1;
+  height: 0.5px;
+  background: rgba(150, 100, 255, 0.2);
+}
+
+.auth-divider-text {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ─── Auth footer link ───────────────────────────────────── */
+.auth-footer {
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 18px;
+}
+
+.auth-footer a {
+  color: #9b59f7;
+  font-weight: 500;
+}
+
+.auth-footer a:hover {
+  color: #c084fc;
+}
+
+/* ─── Generic button (.btn) ──────────────────────────────── */
 .btn {
   padding: 10px 15px;
   border-radius: 8px;
@@ -87,38 +353,22 @@ button{
 .btn:hover {
   background: #1d4ed8;
 }
+
+/* ─── App shell ──────────────────────────────────────────── */
 .app-container {
   display: flex;
-  height : 100vh;
+  height: 100vh;
   background: #f9fafb;
 }
-/*sidebar fixed left*/
+
+/* ─── Sidebar ────────────────────────────────────────────── */
 .sidebar {
   width: 240px;
   background: #111827;
-  color:white;
+  color: white;
 }
-/*right side */
-.main-section {
-  flex:1;
-  display:flex;
-  flex-direction:column;
-}
-/*navbar*/
-.navbar{
-  height : 60px;
-  background: white;
-  border-bottom:1px solid #e5e7eb;
 
-
-}
-/*page content*/
-.page-content{
-  flex:1;
-  padding:20px;
-  overflow-y:auto;
-}
-.logo {
+.sidebar .logo {
   padding: 20px;
   font-size: 20px;
   font-weight: bold;
@@ -143,7 +393,19 @@ button{
   background: #1f2937;
   color: white;
 }
+
+/* ─── Main section ───────────────────────────────────────── */
+.main-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Navbar ─────────────────────────────────────────────── */
 .navbar {
+  height: 60px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -155,6 +417,8 @@ button{
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   width: 250px;
+  background: white;
+  color: #111827;
 }
 
 .avatar {
@@ -167,9 +431,18 @@ button{
   align-items: center;
   justify-content: center;
 }
+
+/* ─── Page content ───────────────────────────────────────── */
+.page-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* ─── Dashboard header ───────────────────────────────────── */
 .dashboard-header {
   background: white;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }

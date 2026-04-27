@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import api from "../../api/axios";
+import { motion } from "framer-motion";
 
 function PasswordModal ({isOpen, onClose, password, refresh}){
   const [form, setForm]=useState({
