@@ -446,3 +446,70 @@ button {
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
+/* ── Auth left panel content ─────────────────────────────── */
+.auth-left-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.auth-big-logo {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #9b59f7, #6c3ed6);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.auth-big-logo svg {
+  width: 40px;
+  height: 40px;
+}
+
+.auth-brand-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.auth-brand-name span {
+  color: #9b59f7;
+}
+
+.auth-brand-slogan {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 36px;
+}
+
+.auth-features {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+.auth-feat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.auth-feat-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9b59f7;
+  flex-shrink: 0;
+}
