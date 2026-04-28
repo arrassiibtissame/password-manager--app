@@ -1,17 +1,13 @@
-import {useState, useEffect} from "react";
-import api from "../../api/axios";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import api from "../../api/axios";
+import { toast } from "react-hot-toast";
 
-function PasswordModal ({isOpen, onClose, password, refresh}){
-  const [form, setForm]=useState({
-    title:"",
-    site:"",
-    username:"",
-    password:"",
-  });
-  //fill the form when editing
-  useEffect(()=>{
-    if (password){
+function PasswordModal({ isOpen, onClose, password, refresh }) {
+  const [form, setForm] = useState({ title: "", site: "", username: "", password: "" });
+
+  useEffect(() => {
+    if (password) {
       setForm({
         title: password.title || "",
         site: password.site || "",
@@ -19,71 +15,72 @@ function PasswordModal ({isOpen, onClose, password, refresh}){
         password: password.password || "",
       });
     }
-  },[password]);
-  
-  const handleChange =(e) => {
-    setForm ({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+  }, [password]);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
-  const handleUpdate = async() => {
-    try{
-      await api.put(`/passwords/${password._id}`,form);
+
+  const handleUpdate = async () => {
+    try {
+      await api.put(`/passwords/${password._id}`, form);
+      toast.success("Password updated!");
       refresh();
       onClose();
-
-    }
-    catch (err){
+    } catch (err) {
       console.log(err);
-      alert ("Update failed");
+      toast.error("Update failed");
     }
   };
-  if(!isOpen) return null;
-  return( 
-    <motion.div
-  initial={{ scale: 0.9, opacity: 0 }}
-  animate={{ scale: 1, opacity: 1 }}
->
-  <div
-    style ={overlayStyle}>
-      <div style ={modalStyle}>
-        <h2>Edit Password</h2>
-        <input name ="title" value ={form.title || ""} onChange={handleChange}/>
-        <input name ="site" value ={form.site || ""} onChange={handleChange}/>
-        <input name ="username" value ={form.username || ""} onChange={handleChange}/>
-        <input name ="password" value ={form.password || ""} onChange={handleChange}/>
 
-<div style={{marginTop:"10px"}}>
-  <button onClick = {handleUpdate} >Save</button>
-  <button onClick ={onClose}>Cancel</button>
-</div>
-      </div>
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <motion.div
+        className="modal-box"
+        initial={{ scale: 0.92, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.2 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="modal-header">
+          <h2 className="modal-title">Edit Password</h2>
+          <button className="modal-close" onClick={onClose}>
+            <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        {/* Form */}
+        <div className="modal-form">
+          <div className="modal-field">
+            <label className="modal-label">Title</label>
+            <input className="modal-input" name="title" value={form.title} onChange={handleChange}/>
+          </div>
+          <div className="modal-field">
+            <label className="modal-label">Site</label>
+            <input className="modal-input" name="site" value={form.site} onChange={handleChange}/>
+          </div>
+          <div className="modal-field">
+            <label className="modal-label">Username</label>
+            <input className="modal-input" name="username" value={form.username} onChange={handleChange}/>
+          </div>
+          <div className="modal-field">
+            <label className="modal-label">Password</label>
+            <input className="modal-input" name="password" value={form.password} onChange={handleChange}/>
+          </div>
+
+          <div className="modal-actions">
+            <button className="modal-btn-cancel" onClick={onClose}>Cancel</button>
+            <button className="modal-btn-submit" onClick={handleUpdate}>Save changes</button>
+          </div>
+        </div>
+      </motion.div>
     </div>
-  </motion.div>
   );
-
-  
 }
-const overlayStyle ={
-  position: "fixed",
-  top:0,
-  left:0,
-  right:0,
-  bottom:0,
-  background:"rgba (0,0,0,0.6)",
-  display:"flex",
-  alignItems:"center",
-  justifyContent:"center",
 
-};
-const modalStyle={
-  background:"white",
-  padding:"20px",
-  borderRadius:"10px",
-  width:"300px",
-  display:"flex",
-  flexDirection:"column",
-  gap:"10px",
-};
 export default PasswordModal;
