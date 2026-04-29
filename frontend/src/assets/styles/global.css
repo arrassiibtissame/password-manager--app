@@ -504,9 +504,23 @@ button {
 }
 
 /* ─── App shell ──────────────────────────────────────────── */
-.app-container { background: #0a0a16; }
+.app-container { 
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  background: #0a0a16;
+  overflow: hidden;
+}
+.main-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
 .page-content {
+  flex: 1;
+  overflow-y: auto;
   background: #0a0a16;
   padding: 28px 32px;
 }
