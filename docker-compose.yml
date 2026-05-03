@@ -1,0 +1,42 @@
+
+
+services:
+
+  # ── Backend (Node/Express) ─────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: passvault-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - PORT=3000
+      - JWT_SECRET=${JWT_SECRET}
+      - SECRET_KEY=${SECRET_KEY}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
+    env_file:
+      - ./backend/.env
+    networks:
+      - passvault-network
+
+  # ── Frontend (React + Nginx) ───────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: passvault-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - passvault-network
+
+# ── Shared network ─────────────────────────────────────
+networks:
+  passvault-network:
+    driver: bridge

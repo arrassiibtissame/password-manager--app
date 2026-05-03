@@ -1253,3 +1253,235 @@ button {
  
 .gen-btn:hover  { opacity: 0.88; }
 .gen-btn:active { transform: scale(0.98); }
+/* __________________________________
+   MOBILE RESPONSIVE STYLES
+   ____________________________________________ */
+
+/* ─── Bottom navigation bar ──────────────────────────────── */
+.bottom-nav {
+  display: none; /* hidden on desktop */
+}
+
+@media (max-width: 768px) {
+
+  /* ── Bottom nav ── */
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: #0d0d1a;
+    border-top: 0.5px solid rgba(150, 100, 255, 0.2);
+    z-index: 50;
+    padding: 0 8px;
+    padding-bottom: env(safe-area-inset-bottom); /* iPhone notch support */
+  }
+
+  .bottom-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    font-size: 10px;
+    transition: color 0.2s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px 0;
+    min-height: 44px; /* touch target */
+  }
+
+  .bottom-nav-item.active {
+    color: #c084fc;
+  }
+
+  .bottom-nav-item.active .bottom-nav-icon {
+    background: rgba(155, 89, 247, 0.15);
+    border-radius: 10px;
+  }
+
+  .bottom-nav-logout {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .bottom-nav-logout:hover {
+    color: #f87171;
+  }
+
+  .bottom-nav-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .bottom-nav-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
+
+  /* ── Hide desktop sidebar on mobile ── */
+  .sidebar {
+    display: none;
+  }
+
+  /* ── App container stacks vertically ── */
+  .app-container {
+    flex-direction: column;
+  }
+
+  /* ── Main section takes full width ── */
+  .main-section {
+    width: 100%;
+  }
+
+  /* ── Add bottom padding so content isn't hidden behind bottom nav ── */
+  .page-content {
+    padding: 16px;
+    padding-bottom: 80px; /* space for bottom nav */
+  }
+
+  /* ── Navbar on mobile ── */
+  .navbar {
+    padding: 0 16px;
+  }
+
+  .navbar-username {
+    display: none; /* hide username text, keep avatar */
+  }
+
+  /* ── Auth pages: hide left panel, center the card ── */
+  .auth-container {
+    flex-direction: column;
+  }
+
+  .auth-left {
+    display: none; /* hide illustration panel on mobile */
+  }
+
+  .auth-right {
+    flex: 1;
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+
+  .auth-card {
+    padding: 28px 20px;
+  }
+
+  /* ── Dashboard header stacks vertically ── */
+  .dash-header {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    align-items: flex-start;
+  }
+
+  .dash-stat-card {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+  }
+
+  .dash-stat-number {
+    font-size: 28px;
+  }
+
+  /* ── Toolbar stacks on mobile ── */
+  .dash-toolbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dash-search-wrap {
+    width: 100%;
+  }
+
+  .dash-add-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ── Password grid: single column ── */
+  .pw-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Generator card ── */
+  .gen-checkboxes {
+    grid-template-columns: 1fr; /* stack checkboxes vertically */
+  }
+
+  .gen-control-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .gen-slider-wrap {
+    width: 100%;
+  }
+
+  /* ── Modals take full screen on mobile ── */
+  .modal-overlay {
+    align-items: flex-end; /* slide up from bottom */
+  }
+
+  .modal-box {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 20px 20px 0 0; /* rounded top corners only */
+    padding: 24px 20px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+
+  /* ── Splash screen ── */
+  .splash-name {
+    font-size: 32px;
+  }
+
+  .splash-logo-icon {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* ── Password card actions — larger tap targets ── */
+  .pw-btn-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .pw-card-actions {
+    gap: 8px;
+  }
+}
+
+/* ─── Tablet adjustments (769px - 1024px) ────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .pw-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .page-content {
+    padding: 20px;
+  }
+
+  .dash-header {
+    padding: 20px 24px;
+  }
+}
