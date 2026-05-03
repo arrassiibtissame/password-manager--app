@@ -4,6 +4,7 @@ import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
 import Splash from "../pages/Splash";
 import ProtectedRoute from "../ProtectedRoute";
+import Passwords from "../pages/Passwords";
 
 function AppRoutes() {
   return (
@@ -20,6 +21,10 @@ function AppRoutes() {
             <Dashboard />
           </ProtectedRoute>
         }
+      />
+      <Route path="/passwords" element={
+        <ProtectedRoute><Passwords/></ProtectedRoute>
+      }
       />
 
       <Route path="*" element={<Navigate to="/" />} />

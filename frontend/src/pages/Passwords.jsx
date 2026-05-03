@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import {AuthContext} from "../context/AuthContext";
-import {color, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import api from  "../api/axios";
 import Layout from  "../components/layout/Layout";
 import PasswordList from "../components/passwords/PasswordList";
@@ -34,14 +34,14 @@ function generatePassword(lenght, options){
 function getStrentgth  (pwd){
     if (!pwd) return {label: "", color:"", score:0};
     let score=0;
-     if (pwd.lenght >= 8) score++;
+     if (pwd.length >= 8) score++;
      if (pwd.lenght>=12) score++;
      if (/[A-Z]/.test(pwd)) score++ ;
      if  (/[0-9]/.test(pwd)) score++;
   if (/[^A-Za-z0-9]/.test(pwd)) score++;
  
-  if (score <= 1) return {label: "Very weak", color: "#ef444",score};
-  if (score === 2) return {label: " weak", color: "#ef97316",score};
+  if (score <= 1) return {label: "Very weak", color: "#ef4444",score};
+  if (score === 2) return {label: " weak", color: "#f97316",score};
   if (score === 3) return {label: "Fair", color: "#eab308",score};
   if (score === 4) return {label: "Strong", color: "#22c55e",score};
   return {label: "Very strong", color: "#9b59f7", score};
@@ -56,7 +56,7 @@ function Passwords (){
 
     const [genLength, setGenLength]=useState (16);
     const [genOptions, setGenOptions]= useState({
-        upper:true, lower: true, numbers, symbols: false ,
+        upper:true, lower: true, numbers:true , symbols: false ,
 
     });
     const [generated ,setGenerated] = useState("");
@@ -84,7 +84,7 @@ function Passwords (){
     navigator.clipboard.writeText(generated);
     setCopied(true);
     toast.success("Password copied!");
-    setTimeout(() => setCopied(flase ),2000);
+    setTimeout(() => setCopied(false ),2000);
   };
   const strength = getStrentgth(generated);
   const filtered = passwords.filter ((p) => 
@@ -109,7 +109,7 @@ return (
 
             </div>
             <div className="dash-stat-card">
-                <span className="dash-stat-number">{passwords.lenght}</span>
+                <span className="dash-stat-number">{passwords.length}</span>
                 <span className="dash-stat-label">Total saved</span>
             </div>
         </motion.div>
