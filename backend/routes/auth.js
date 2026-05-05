@@ -31,21 +31,24 @@ router.post("/register", async (req, res) => {
 
 // Login route
 router.post("/login", async (req, res) => {
- 
+  //cheking the user info 
   try {
-    // check the user 
-     const { email, password } = req.body;
+    const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
-//check the password 
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
-//check token
+
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-// send response 
-    res.json({ token });
+
+    // ← ADD user object to response
+    res.json({
+      token,
+      user: { id: user._id, username: user.username, email: user.email }
+    });
   } catch (err) {
-    console.error("login error:",err);
+    console.error("login error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
