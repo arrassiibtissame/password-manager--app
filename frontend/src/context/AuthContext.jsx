@@ -44,9 +44,11 @@ export default function AuthProvider({ children }) {
       const res = await axios.post("/auth/login", formData);
 
       setToken(res.data.token);
+        setUser(res.data.user);
       
 
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
  return res.data;
     
     } catch (err) {
