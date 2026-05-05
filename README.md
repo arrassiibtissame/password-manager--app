@@ -395,7 +395,7 @@ Authorization: Bearer <jwt_token>
 **Ibtissame Arrassi**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Ibtissame_Arrassi-0077b5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/ibtissame-a-87a851306)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat-square&logo=github)](https://github.com/YOUR_USERNAME)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat-square&logo=github)](https://github.com/arrassiibtissame)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-PassVault-9b59f7?style=flat-square)](https://passvault-frontend-ayhw.onrender.com)
 
 </div>
